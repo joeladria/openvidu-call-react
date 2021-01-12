@@ -10,9 +10,12 @@
         "@material-ui/icons": "4.9.1",
         "axios": "^0.21.1",
         "jquery": "3.5.0",
+        "moveable-helper": "^0.4.0",
         "openvidu-browser": "2.16.0",
         "react": "16.13.1",
+        "react-chromakeyed-image": "^1.1.0",
         "react-dom": "16.13.1",
+        "react-moveable": "^0.25.2",
         "react-scripts": "^3.4.3"
     },
     "name": "openvidu-call-react",

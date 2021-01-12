@@ -6,9 +6,16 @@ import StreamComponent from './stream/StreamComponent';
 import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import ChatComponent from './chat/ChatComponent';
 
-import OpenViduLayout from '../layout/openvidu-layout';
+
+
+
+
+// import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
+
+import LayerModel from '../models/layer-model'
+import LayerComponent from './layer/LayerComponent.tsx'
 
 var localUser = new UserModel();
 
@@ -20,16 +27,16 @@ class VideoRoomComponent extends Component {
             : 'https://' + window.location.hostname + ':4443';
         this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret ? this.props.openviduSecret : 'MY_SECRET';
         this.hasBeenUpdated = false;
-        this.layout = new OpenViduLayout();
+        // this.layout = new OpenViduLayout();
         let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
-        let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+        let userName = this.props.user ? this.props.user : 'User' + Math.floor(Math.random() * 100);
         this.state = {
             mySessionId: sessionName,
             myUserName: userName,
             session: undefined,
             localUser: undefined,
             subscribers: [],
-            chatDisplay: 'none',
+            chatDisplay: 'block',
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -50,22 +57,22 @@ class VideoRoomComponent extends Component {
 
     componentDidMount() {
         const openViduLayoutOptions = {
-            maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
-            minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
-            fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
+            maxRatio: 16 / 9, // The narrowest ratio that will be used (default 2x3)
+            minRatio: 16 / 9, // The widest ratio that will be used (default 16x9)
+            fixedRatio: true, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
             bigClass: 'OV_big', // The class to add to elements that should be sized bigger
-            bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
-            bigFixedRatio: false, // fixedRatio for the big ones
-            bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
-            bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
+            bigPercentage: 1, // The maximum percentage of space the big ones should take up
+            bigFixedRatio: true, // fixedRatio for the big ones
+            bigMaxRatio: 16 / 9 , // The narrowest ratio to use for the big elements (default 2x3)
+            bigMinRatio: 16 / 9, // The widest ratio to use for the big elements (default 16x9)
             bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
             animate: true, // Whether you want to animate the transitions
         };
 
-        this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
+        // this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
         window.addEventListener('beforeunload', this.onbeforeunload);
-        window.addEventListener('resize', this.updateLayout);
-        window.addEventListener('resize', this.checkSize);
+        // window.addEventListener('resize', this.updateLayout);
+        // window.addEventListener('resize', this.checkSize);
         this.joinSession();
     }
 
@@ -296,9 +303,9 @@ class VideoRoomComponent extends Component {
     }
 
     updateLayout() {
-        setTimeout(() => {
-            this.layout.updateLayout();
-        }, 20);
+        // setTimeout(() => {
+        //     // this.layout.updateLayout();
+        // }, 20);
     }
 
     sendSignalUserChanged(data) {
@@ -392,20 +399,20 @@ class VideoRoomComponent extends Component {
         let isScreenShared;
         // return true if at least one passes the test
         isScreenShared = this.state.subscribers.some((user) => user.isScreenShareActive()) || localUser.isScreenShareActive();
-        const openviduLayoutOptions = {
-            maxRatio: 3 / 2,
-            minRatio: 9 / 16,
-            fixedRatio: isScreenShared,
-            bigClass: 'OV_big',
-            bigPercentage: 0.8,
-            bigFixedRatio: false,
-            bigMaxRatio: 3 / 2,
-            bigMinRatio: 9 / 16,
-            bigFirst: true,
-            animate: true,
-        };
-        this.layout.setLayoutOptions(openviduLayoutOptions);
-        this.updateLayout();
+        // const openviduLayoutOptions = {
+        //     maxRatio: 3 / 2,
+        //     minRatio: 9 / 16,
+        //     fixedRatio: isScreenShared,
+        //     bigClass: 'OV_big',
+        //     bigPercentage: 0.8,
+        //     bigFixedRatio: false,
+        //     bigMaxRatio: 3 / 2,
+        //     bigMinRatio: 9 / 16,
+        //     bigFirst: true,
+        //     animate: true,
+        // };
+        // this.layout.setLayoutOptions(openviduLayoutOptions);
+        // this.updateLayout();
     }
 
     toggleChat(property) {
@@ -459,8 +466,12 @@ class VideoRoomComponent extends Component {
                 />
 
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />
+                <div id="chromas">
 
-                <div id="layout" className="bounds">
+                    <LayerComponent id="horse" width="320" height="240" />
+                    
+                </div>
+                <div id="video-container">
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
                             <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
@@ -471,17 +482,20 @@ class VideoRoomComponent extends Component {
                             <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
                         </div>
                     ))}
-                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                        <div className="OT_root OT_publisher custom-class" style={chatDisplay}>
+                  
+                </div>
+
+                {localUser !== undefined && localUser.getStreamManager() !== undefined && (
+                        <div className="chatHorse" style={chatDisplay}>
                             <ChatComponent
                                 user={localUser}
                                 chatDisplay={this.state.chatDisplay}
                                 close={this.toggleChat}
                                 messageReceived={this.checkNotification}
                             />
+                            
                         </div>
                     )}
-                </div>
             </div>
         );
     }

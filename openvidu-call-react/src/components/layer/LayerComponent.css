@@ -1,0 +1,22 @@
+canvas {
+  width: 100%;
+}
+video {
+  width: 320px;
+  float: left;
+  margin: 10px auto 0 auto;
+  display: block;
+  /*opacity:0.8;*/
+}
+
+.actor svg {
+  margin-left: -0.5em;
+  margin-bottom: -0.5em;
+  opacity: 0;
+  /*opacity:20%;*/
+}
+
+.container,
+.target {
+  width: 320px;
+}
