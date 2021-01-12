@@ -9,10 +9,11 @@ const ChromaComponent = props => {
   
   const draw = (ctx, frameCount) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.fillStyle = '#000000'
-    ctx.beginPath()
-    ctx.arc(50, 100, 20*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI)
-    ctx.fill()
+    var video = document.getElementById('localUser');
+    
+    if (video) {
+      ctx.drawImage(video.querySelector('video'), 0, 0)
+    };
   }
   
   useEffect(() => {
@@ -36,11 +37,7 @@ const ChromaComponent = props => {
   }, [draw])
   
   return (<div>
-     <ReactChromakeyedImage 
-      src="https://picsum.photos/320/240"
-      findColor="#fede58" 
-      replaceColor="#FF0000"
-    />
+
     
     <canvas ref={canvasRef} {...props} />
   </div>)

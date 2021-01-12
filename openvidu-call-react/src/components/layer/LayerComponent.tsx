@@ -41,7 +41,7 @@ import {
                         src="https://picsum.photos/320/240"
                         alt="horse"
                     /> */}
-                    <ChromaComponent />
+                    <ChromaComponent width="640" height="480" />
                 </div>
                 <Moveable
                     target={targetRef}

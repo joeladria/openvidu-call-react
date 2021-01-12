@@ -276,12 +276,12 @@
 }
 
 /* Styles that are applied when the video element should be mirrored */
-.OT_publisher.OT_mirrored .OT_video-element {
+/* .OT_publisher.OT_mirrored .OT_video-element {
   -webkit-transform: scale(-1, 1);
   transform: scale(-1, 1);
   -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
-}
+} */
 
 .OT_subscriber_error {
   background-color: #000;
