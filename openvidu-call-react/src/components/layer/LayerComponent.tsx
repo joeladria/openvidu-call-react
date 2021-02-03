@@ -56,6 +56,9 @@ import {
                     onRotateStart={helper.onRotateStart}
                     onRotate={helper.onRotate}
 
+                    onDragStart={({ target, clientX, clientY }) => {
+                        console.log("onDragStart", target);
+                    }}
                     onDrag={({
                         target,
                         beforeDelta, beforeDist,
@@ -64,7 +67,7 @@ import {
                         delta, dist,
                         transform,
                         clientX, clientY,
-                    }: OnDrag) => {
+                    }) => {
                         console.log("onDrag left, top", left, top);
                         // target!.style.left = `${left}px`;
                         // target!.style.top = `${top}px`;
@@ -74,6 +77,9 @@ import {
                     onDragEnd={({ target, isDrag, clientX, clientY }) => {
                         console.log("onDragEnd", target, isDrag);
                     }}
+        
+                    
+                    
                 />
       
                 
