@@ -468,9 +468,21 @@ class VideoRoomComponent extends Component {
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />
                 <div id="chromas">
 
-                    <LayerComponent id="horse" width="320" height="240" />
+                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
+                        
+                            <LayerComponent user={localUser}  width="320" height="240" />
+                        
+                    )}
+                    {this.state.subscribers.map((sub, i) => (
+                        
+                            <LayerComponent user={sub}  width="320" height="240"/>
+                        
+                    ))}
                     
                 </div>
+
+
+
                 <div id="video-container">
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
