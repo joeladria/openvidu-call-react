@@ -3,12 +3,15 @@ import ReactChromakeyedImage from 'react-chromakeyed-image';
 
 
 const ChromaComponent = props => {
+  console.log(props.user.getNickname())
   
   
   const canvasRef = useRef(null)
   
   const draw = (ctx, frameCount) => {
+    
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    
     var video = document.getElementById('localUser');
     
     if (video) {

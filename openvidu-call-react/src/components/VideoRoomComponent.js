@@ -15,7 +15,8 @@ import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import LayerModel from '../models/layer-model'
-import LayerComponent from './layer/LayerComponent.tsx'
+// import LayerComponent from './layer/LayerComponent.tsx'
+import LayerComponent from './layer/LayerComponent.js'
 
 var localUser = new UserModel();
 
@@ -469,14 +470,10 @@ class VideoRoomComponent extends Component {
                 <div id="chromas">
 
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                        
-                            <LayerComponent user={localUser}  width="320" height="240" />
-                        
+                        <LayerComponent user={localUser} width="320" height="240" />
                     )}
                     {this.state.subscribers.map((sub, i) => (
-                        
-                            <LayerComponent user={sub}  width="320" height="240"/>
-                        
+                        <LayerComponent user={sub} width="320" height="240"/>
                     ))}
                     
                 </div>

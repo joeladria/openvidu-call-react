@@ -36,7 +36,7 @@ import {
             <div className="container">
                 <div className="target" ref={targetRef}>
                     {}
-                    <ChromaComponent width="640" height="480" />
+                    <ChromaComponent user="{props.user}" width="640" height="480" />
                 </div>
                 <Moveable
                     target={targetRef}
